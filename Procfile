@@ -1,1 +1,1 @@
-web: gunicorn xoticserver.wsgi --log-file -
+web: gunicorn junction.wsgi --log-file -
