@@ -9,7 +9,7 @@
                 <button class="orbit-next"><span class="show-for-sr">Next Slide</span>&#9654;&#xFE0E;</button>
                 {% for image in object.images.all %}
                     {% if forloop.counter == 1 %}
-                        <li class=" is-active orbit-slide">
+                        <li class="is-active orbit-slide">
                             <img class="orbit-image" src="{{ image.url }}" alt="{{ object.name }}">
                             <figcaption class="orbit-caption">{{ object.name }}</figcaption>
                         </li>
@@ -53,7 +53,9 @@
 
     <script type="text/javascript">
         const e = $('.orbit')
-        const orbit = new Foundation.Orbit(e)
+        new Foundation.Orbit(e, {
+            timerDelay: 2500
+        })
     </script>
 
 {% endblock body %}
