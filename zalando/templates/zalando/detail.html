@@ -1,0 +1,59 @@
+{% extends './base.html' %}
+
+{% block body %}
+
+    <div class="large-4 large-offset-4 medium-6 medium-offset-3 small-10 small-offset-1 columns">
+        <div class="orbit" role="region" aria-label="Favorite Space Pictures" data-orbit>
+            <ul class="orbit-container">
+                <button class="orbit-previous"><span class="show-for-sr">Previous Slide</span>&#9664;&#xFE0E;</button>
+                <button class="orbit-next"><span class="show-for-sr">Next Slide</span>&#9654;&#xFE0E;</button>
+                {% for image in object.images.all %}
+                    {% if forloop.counter == 1 %}
+                        <li class=" is-active orbit-slide">
+                            <img class="orbit-image" src="{{ image.url }}" alt="{{ object.name }}">
+                            <figcaption class="orbit-caption">{{ object.name }}</figcaption>
+                        </li>
+                    {% else %}
+                        <li class="orbit-slide">
+                            <img class="orbit-image" src="{{ image.url }}" alt="{{ object.name }}">
+                            <figcaption class="orbit-caption">{{ object.name }}</figcaption>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <nav class="orbit-bullets">
+                {% for image in object.images.all %}
+                    {% if forloop.counter == 1 %}
+                        <button class="is-active" data-slide="{{ forloop.counter0 }}">
+                            <span class="show-for-sr">{{ object.name }}</span>
+                        </button>
+                    {% else %}
+                        <button data-slide="{{ forloop.counter0 }}">
+                            <span class="show-for-sr">{{ object.name }}</span>
+                        </button>
+                    {% endif %}
+                {% endfor %}
+            </nav>
+        </div>
+
+        <div>
+            <a class="button" target="_blank" href="{{ object.shop_url }}">Go To Shop</a>
+        </div>
+
+        {% if object.tracks.first %}
+            <iframe scrolling="no" frameborder="0" allowTransparency="true"
+                    src="//www.deezer.com/plugins/player?format=classic&autoplay=true&playlist=false&width=700&height=350&color=007FEB&layout=&size=medium&type=tracks&id={{ object.tracks.first.track_id }}&app_id=1"
+                    width="500" height="100"></iframe>
+
+        {% else %}
+            <p>No music</p>
+        {% endif %}
+
+    </div>
+
+    <script type="text/javascript">
+        const e = $('.orbit')
+        const orbit = new Foundation.Orbit(e)
+    </script>
+
+{% endblock body %}

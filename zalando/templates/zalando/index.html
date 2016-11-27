@@ -1,0 +1,60 @@
+{% extends './base.html' %}
+
+{% block body %}
+<div>
+    {% if is_paginated %}
+    <ul class="pagination text-center" role="navigation" aria-label="Pagination">
+        {% if page_obj.has_previous %}
+        <li class="pagination-previous"><a href="{% url 'zalando:index' %}?page={{ page_obj.previous_page_number }}">Previous</a>
+        </li>
+        {% else %}
+        <li class="pagination-previous disabled">Previous</li>
+        {% endif %}
+        <li class="current"><span class="show-for-sr">
+            You're on page</span> {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+        </li>
+        {% if page_obj.has_next %}
+        <li class="pagination-next"><a href="{% url 'zalando:index' %}?page={{ page_obj.next_page_number }}">Next</a>
+        </li>
+        {% else %}
+        <li class="pagination-next disabled">Next</li>
+        {% endif %}
+    </ul>
+    {% endif %}
+
+    <div class="row">
+        {% for article in object_list %}
+        <div class="small-6 medium-4 large-3 columns">
+            <a href="{% url 'zalando:detail' article.id %}">
+                <img src="{{ article.images.first.url }}">
+                <!--<div>-->
+                    <!--{{ article.name }}-->
+                <!--</div>-->
+            </a>
+        </div>
+        {% empty %}
+        <div class="small-6 large-4 columns">No articles yet.</div>
+        {% endfor %}
+    </div>
+
+    {% if is_paginated %}
+    <ul class="pagination text-center" role="navigation" aria-label="Pagination">
+        {% if page_obj.has_previous %}
+        <li class="pagination-previous"><a href="{% url 'zalando:index' %}?page={{ page_obj.previous_page_number }}">Previous</a>
+        </li>
+        {% else %}
+        <li class="pagination-previous disabled">Previous</li>
+        {% endif %}
+        <li class="current"><span class="show-for-sr">
+            You're on page</span> {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+        </li>
+        {% if page_obj.has_next %}
+        <li class="pagination-next"><a href="{% url 'zalando:index' %}?page={{ page_obj.next_page_number }}">Next</a>
+        </li>
+        {% else %}
+        <li class="pagination-next disabled">Next</li>
+        {% endif %}
+    </ul>
+    {% endif %}
+</div>
+{% endblock body %}
